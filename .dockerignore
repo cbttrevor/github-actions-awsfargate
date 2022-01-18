@@ -1,0 +1,4 @@
+.github/**
+build.ps1
+Dockerfile
+todolist/node_modules/

@@ -1,0 +1,22 @@
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  fargate:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install AWS PowerShell Modules
+      run: |
+        Install-Module -Name AWS.Tools.ECR, AWS.Tools.ECS, AWS.Tools.CloudFormation
+        (Get-Module -ListAvailable -Name AWS.Tools.*).Source
+    - uses: actions/checkout@v2
+    - uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-west-2
+    - name: Docker Login to Amazon Elastic Container Registry (ECR)
+
+    - name: Build Container Image
+    - name: Push Container Image to ECR
