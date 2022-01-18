@@ -13,7 +13,7 @@ jobs:
     - name: Set Amazon ECR Registry DNS Name
       shell: pwsh
       run: |
-        '{ecr-registry}={${{ env.awsaccountid }}.dkr.ecr.${{ env.awsregion }}.amazonaws.com}' >> $env:GITHUB_ENV
+        'ecr-registry=${{ env.awsaccountid }}.dkr.ecr.${{ env.awsregion }}.amazonaws.com' >> $env:GITHUB_ENV
     - name:
       shell: pwsh
       run: |
@@ -38,6 +38,6 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: 
+        tags: ${{ env.ecr-registry }}/todolist:latest
     - name: Push Container Image to ECR
       run: echo hi
