@@ -21,7 +21,7 @@ jobs:
     - name: Install AWS PowerShell Modules
       shell: pwsh
       run: |
-        Install-Module -Name AWS.Tools.ECR, AWS.Tools.ECS, AWS.Tools.CloudFormation
+        Install-Module -Name AWS.Tools.ECR, AWS.Tools.ECS, AWS.Tools.CloudFormation -Scope CurrentUser -Force
         (Get-Module -ListAvailable -Name AWS.Tools.*).Source
     - uses: actions/checkout@v2
     - uses: aws-actions/configure-aws-credentials@v1
@@ -32,7 +32,7 @@ jobs:
     - name: Docker Login to Amazon Elastic Container Registry (ECR)
       uses: docker/login-action@v1
       with:
-        registry: 
+        registry: ${{ env.ecr-registry }}
         username: ${{ secrets.AWS_ACCESS_KEY_ID }}
         password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     - name: Build Container Image
