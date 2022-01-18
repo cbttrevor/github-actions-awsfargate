@@ -5,6 +5,7 @@ on:
 env:
   awsregion: us-west-2
   awsaccountid: 987868780346
+  ecr-reponame: todolist
 
 jobs:
   fargate:
@@ -14,6 +15,7 @@ jobs:
       shell: pwsh
       run: |
         'ecr-registry=${{ env.awsaccountid }}.dkr.ecr.${{ env.awsregion }}.amazonaws.com' >> $env:GITHUB_ENV
+        'ecr-repository=${{ env.ecr-registry }}/${{ env.ecr-reponame }}' >> $env:GITHUB_ENV
     - name:
       shell: pwsh
       run: |
@@ -29,6 +31,11 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-west-2
+    - name: Create Amazon ECR Registry
+      shell: pwsh
+      continue-on-error: true
+      run: |
+        New-ECRRepository -RepositoryName ${{ env.ecr-reponame }}
     - name: Docker Login to Amazon Elastic Container Registry (ECR)
       uses: docker/login-action@v1
       with:
@@ -39,6 +46,4 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: ${{ env.ecr-registry }}/todolist:latest
-    - name: Push Container Image to ECR
-      run: echo hi
+        tags: ${{ env.ecr-repository }}:latest
