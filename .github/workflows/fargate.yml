@@ -70,6 +70,6 @@ jobs:
       shell: pwsh
       run: |
         New-ECSTask -Cluster ${{ env.ecs-cluster-name }} -TaskDefinition ${{ env.ecs-cluster-name }} `
-          -NetworkConfiguration_AwsvpcConfiguration_AssignPublicIp [Amazon.ECS.AssignPublicIp]::ENABLED `
+          -NetworkConfiguration_AwsvpcConfiguration_AssignPublicIp ([Amazon.ECS.AssignPublicIp]::ENABLED) `
           -NetworkConfiguration_AwsvpcConfiguration_Subnets @('subnet-0e38914ec75185136', 'subnet-043640f89766cf8d3') `
           -LaunchType FARGATE
