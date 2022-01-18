@@ -19,6 +19,7 @@ jobs:
       run: |
         Write-Host -Object ('Amazon ECR registry is: {0}' -f ${env:ecr-registry})
     - name: Install AWS PowerShell Modules
+      shell: pwsh
       run: |
         Install-Module -Name AWS.Tools.ECR, AWS.Tools.ECS, AWS.Tools.CloudFormation
         (Get-Module -ListAvailable -Name AWS.Tools.*).Source
