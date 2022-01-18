@@ -15,6 +15,9 @@ jobs:
       shell: pwsh
       run: |
         'ecr-registry=${{ env.awsaccountid }}.dkr.ecr.${{ env.awsregion }}.amazonaws.com' >> $env:GITHUB_ENV
+    - name: Set Amazon ECR Repository
+      shell: pwsh
+      run: |
         'ecr-repository=${{ env.ecr-registry }}/${{ env.ecr-reponame }}' >> $env:GITHUB_ENV
     - name:
       shell: pwsh
