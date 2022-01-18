@@ -22,7 +22,7 @@ jobs:
       shell: pwsh
       run: |
         Install-Module -Name AWS.Tools.ECR, AWS.Tools.ECS, AWS.Tools.CloudFormation -Scope CurrentUser -Force
-        (Get-Module -ListAvailable -Name AWS.Tools.*).Source
+        Write-Host -Object (Get-Module -ListAvailable -Name AWS.Tools.*).Path
     - uses: actions/checkout@v2
     - uses: aws-actions/configure-aws-credentials@v1
       with:
